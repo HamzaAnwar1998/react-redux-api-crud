@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { AnimatePresence, motion } from "framer-motion";
-import toast from "react-hot-toast";
 import Icon from "react-icons-kit";
 import { x } from "react-icons-kit/feather/x";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser } from "../store/slices/UsersSlice";
 import { MetroSpinner } from "react-spinners-kit";
+import { deleteUser } from "../store/slices/UserSlice";
+import toast from "react-hot-toast";
 
 // backshadow variants
 const backVariants = {
@@ -34,7 +34,7 @@ const modalVariants = {
 };
 
 const DeleteUserModal = ({ setDeleteUserModal, deleteUserId }) => {
-  //redux state
+  // redux state
   const { deleteUserLoading, deleteUserData } = useSelector(
     (state) => state.users
   );

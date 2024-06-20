@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { MDBBtn, MDBTable, MDBTableBody, MDBTableHead } from "mdb-react-ui-kit";
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import Icon from "react-icons-kit";
 import { software_pencil } from "react-icons-kit/linea/software_pencil";
 import { basic_trashcan_remove } from "react-icons-kit/linea/basic_trashcan_remove";
 import { useSelector } from "react-redux";
 
-const Users = ({ handleDeleteModal, handleEditModal }) => {
+const Users = ({ handleDeleteModal }) => {
+  // redux states
   const { data, error } = useSelector((state) => state.users);
 
   return (
@@ -37,6 +37,7 @@ const Users = ({ handleDeleteModal, handleEditModal }) => {
                       ? nameParts[0].charAt(0) +
                         nameParts[nameParts.length - 1].charAt(0)
                       : nameParts[0].charAt(0);
+
                   return (
                     <tr key={data.id}>
                       <td>
@@ -71,7 +72,7 @@ const Users = ({ handleDeleteModal, handleEditModal }) => {
                           color="link"
                           rounded
                           size="sm"
-                          onClick={() => handleEditModal(data)}
+                          //   onClick={() => handleEditModal(data)}
                         >
                           <Icon icon={software_pencil} size={22} />
                         </MDBBtn>
@@ -90,7 +91,7 @@ const Users = ({ handleDeleteModal, handleEditModal }) => {
               </MDBTableBody>
             </MDBTable>
           ) : (
-            <div className="error-msg">No User Record Found</div>
+            <div className="error-msg">No user record found!</div>
           )}
         </>
       )}

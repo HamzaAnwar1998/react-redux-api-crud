@@ -1,18 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import "./App.css";
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "./store/slices/UsersSlice";
-import Users from "./components/Users";
+import { fetchUsers } from "./store/slices/UserSlice";
 import { MetroSpinner } from "react-spinners-kit";
 import { MDBBtn } from "mdb-react-ui-kit";
 import { Toaster } from "react-hot-toast";
-import DeleteUserModal from "./components/DeleteUserModal";
-import EditUserModal from "./components/EditUserModal";
-import AddUserModal from "./components/AddUserModal";
+import Users from "./components/Users";
+import DeleteUserModal from "./components/DeleteUserModal.jsx";
 
 function App() {
-  // redux state
+  // redux states
   const { loading } = useSelector((state) => state.users);
 
   // dispatch
@@ -23,7 +22,7 @@ function App() {
     dispatch(fetchUsers());
   }, []);
 
-  // delete modal
+  // delete user states
   const [deleteUserModal, setDeleteUserModal] = useState(false);
   const [deleteUserId, setDeleteUserId] = useState(null);
 
@@ -32,23 +31,11 @@ function App() {
     setDeleteUserId(id);
   };
 
-  // edit modal
-  const [editUserModal, setEditUserModal] = useState(false);
-  const [editUserObj, setEditUserObj] = useState(null);
-
-  const handleEditModal = (obj) => {
-    setEditUserModal(true);
-    setEditUserObj(obj);
-  };
-
-  // add modal
-  const [addUserModal, setAddUserModal] = useState(false);
-
   return (
     <>
       {loading ? (
         <div className="loading-screen">
-          <MetroSpinner loading={loading} size={30} color="#007c16" />
+          <MetroSpinner loading={loading} size={30} color="#14a44d" />
         </div>
       ) : (
         <div className="wrapper">
@@ -56,37 +43,25 @@ function App() {
           {/* nav */}
           <div className="nav">
             <h5>React Redux Clientside API CRUD</h5>
-            <MDBBtn color="success" onClick={() => setAddUserModal(true)}>
+            <MDBBtn type="button" color="success">
               Add User
             </MDBBtn>
           </div>
-          {/* user table */}
+
+          {/* users table */}
           <div className="users-table-container">
-            <Users
-              handleDeleteModal={handleDeleteModal}
-              handleEditModal={handleEditModal}
-            />
+            <Users handleDeleteModal={handleDeleteModal} />
           </div>
         </div>
       )}
-      {/* delete modal */}
+
+      {/* delete user modal */}
       {deleteUserModal && (
         <DeleteUserModal
           setDeleteUserModal={setDeleteUserModal}
           deleteUserId={deleteUserId}
         />
       )}
-
-      {/* edit modal */}
-      {editUserModal && (
-        <EditUserModal
-          setEditUserModal={setEditUserModal}
-          editUserObj={editUserObj}
-        />
-      )}
-
-      {/* add modal */}
-      {addUserModal && <AddUserModal setAddUserModal={setAddUserModal} />}
     </>
   );
 }
