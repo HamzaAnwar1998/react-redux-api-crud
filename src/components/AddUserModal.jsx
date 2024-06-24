@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../store/slices/UsersSlice";
 import { MetroSpinner } from "react-spinners-kit";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+import { v4 as uuidv4 } from "uuid";
 
 // backshadow variants
 const backVariants = {
@@ -37,7 +38,7 @@ const modalVariants = {
 
 const AddUserModal = ({ setAddUserModal }) => {
   // redux state
-  const { data, addUserLoading, addUserData } = useSelector(
+  const { addUserLoading, addUserData } = useSelector(
     (state) => state.users
   );
 
@@ -63,7 +64,7 @@ const AddUserModal = ({ setAddUserModal }) => {
     e.preventDefault();
     dispatch(
       addUser({
-        id: data.length + 1,
+        id: uuidv4(),
         name: fullName,
         email,
         username,

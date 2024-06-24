@@ -47,6 +47,7 @@ export const updateUser = createAsyncThunk("updateUser", async (obj) => {
       },
     };
     const data = {
+      id: obj.id,
       name: obj.name,
       email: obj.email,
       username: obj.username,
@@ -59,6 +60,7 @@ export const updateUser = createAsyncThunk("updateUser", async (obj) => {
       axiosConfig
     );
     const response = await request.data;
+    response.id = obj.id;
     console.log(response);
 
     return {
@@ -87,6 +89,7 @@ export const addUser = createAsyncThunk("addUser", async (obj) => {
       },
     };
     const data = {
+      id: obj.id,
       name: obj.name,
       email: obj.email,
       username: obj.username,
@@ -99,6 +102,7 @@ export const addUser = createAsyncThunk("addUser", async (obj) => {
       axiosConfig
     );
     const response = await request.data;
+    response.id = obj.id;
     console.log(response);
 
     return {

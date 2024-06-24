@@ -19,7 +19,8 @@
     "react-hot-toast": "^2.4.1",
     "react-icons-kit": "^2.0.0",
     "react-redux": "^9.0.4",
-    "react-spinners-kit": "^1.9.1"
+    "react-spinners-kit": "^1.9.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
