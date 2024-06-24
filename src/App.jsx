@@ -2,22 +2,20 @@
 import "./App.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchUsers } from "./store/slices/UserSlice";
-import { MetroSpinner } from "react-spinners-kit";
 import { MDBBtn } from "mdb-react-ui-kit";
 import { Toaster } from "react-hot-toast";
 import Users from "./components/Users";
 import DeleteUserModal from "./components/DeleteUserModal.jsx";
+import AddUserModal from "./components/AddUserModal.jsx";
+import EditUserModal from "./components/EditUserModal.jsx";
 
 function App() {
-  // redux states
-  const { loading } = useSelector((state) => state.users);
-
   // dispatch
   const dispatch = useDispatch();
 
-  // fetch users
+  // fetch users, we are calling this function on app render and we immediately need loading as true
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
@@ -31,35 +29,58 @@ function App() {
     setDeleteUserId(id);
   };
 
+  // add user states
+  const [addUserModal, setAddUserModal] = useState(false);
+
+  // edit user states
+  const [editUserModal, setEditUserModal] = useState(false);
+  const [editUserObj, setEditUserObj] = useState(null);
+
+  const handleEditModal = (obj) => {
+    setEditUserModal(true);
+    setEditUserObj(obj);
+  };
+
   return (
     <>
-      {loading ? (
-        <div className="loading-screen">
-          <MetroSpinner loading={loading} size={30} color="#14a44d" />
+      <div className="wrapper">
+        <Toaster />
+        {/* nav */}
+        <div className="nav">
+          <h5>React Redux Clientside API CRUD</h5>
+          <MDBBtn
+            type="button"
+            color="success"
+            onClick={() => setAddUserModal(true)}
+          >
+            Add User
+          </MDBBtn>
         </div>
-      ) : (
-        <div className="wrapper">
-          <Toaster />
-          {/* nav */}
-          <div className="nav">
-            <h5>React Redux Clientside API CRUD</h5>
-            <MDBBtn type="button" color="success">
-              Add User
-            </MDBBtn>
-          </div>
 
-          {/* users table */}
-          <div className="users-table-container">
-            <Users handleDeleteModal={handleDeleteModal} />
-          </div>
+        {/* users table */}
+        <div className="users-table-container">
+          <Users
+            handleDeleteModal={handleDeleteModal}
+            handleEditModal={handleEditModal}
+          />
         </div>
-      )}
-
+      </div>
       {/* delete user modal */}
       {deleteUserModal && (
         <DeleteUserModal
           setDeleteUserModal={setDeleteUserModal}
           deleteUserId={deleteUserId}
+        />
+      )}
+
+      {/* add user modal */}
+      {addUserModal && <AddUserModal setAddUserModal={setAddUserModal} />}
+
+      {/* edit user modal */}
+      {editUserModal && (
+        <EditUserModal
+          setEditUserModal={setEditUserModal}
+          editUserObj={editUserObj}
         />
       )}
     </>
